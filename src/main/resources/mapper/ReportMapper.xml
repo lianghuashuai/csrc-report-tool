@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.csrc.tool.mapper.ToolMapper">
+    <resultMap id="ResultMap" type="com.csrc.tool.config.report">
+        <result column="reportid" jdbcType="VARCHAR" property="reportid" />
+        <result column="reportname" jdbcType="VARCHAR" property="reportname" />
+        <result property="reportsql" column="reportsql" javaType="java.lang.String" jdbcType="CLOB"/>
+        <result column="submittimelimit" jdbcType="VARCHAR" property="submittimelimit" />
+        <result column="isrelateproduct" jdbcType="VARCHAR" property="isrelateproduct" />
+    </resultMap>
+
+    <resultMap id="pfid" type="com.csrc.tool.config.pfid">
+        <result column="pfid" jdbcType="VARCHAR" property="pfid" />
+        <result column="days" jdbcType="VARCHAR" property="days" />
+
+    </resultMap>
+
+    <select id="generate" parameterType="java.lang.String" resultType="java.util.LinkedHashMap">
+        ${reportsql}
+    </select>
+
+    <select id="ywdate" resultType="java.lang.String">
+        select  FU_GET_CPYWDATE(#{days},#{subdate}) as ywdate from dual
+    </select>
+
+    <select id="report" resultMap="ResultMap">
+        select  a.dataset_code as reportid ,b.report_name as reportname ,a.dataset_sql as reportsql,b.submit_time_limit as submittimelimit,b.isrelateproduct from (
+         select  t.dataset_code,t.dataset_name,t.dataset_sql,t.report_id
+         from TC_REP_DATASET t
+         where t.dataset_code between 'A00040' and 'A00106'
+        ) a
+        left join (
+          select t2.ISRELATEPRODUCT,t2.report_id,t2.report_name,t2.submit_time_limit from tc_rep_para t2
+         )b on a.report_id=b.report_id
+         order by b.report_id
+    </select>
+
+    <select id="pfid" resultMap="pfid">
+        select a.pf_id as pfid, a.attached_value as days
+          from tc_pf_bsc_info_attached a
+        join (select pf_id from tc_pf_bsc_info b where b.is_using = '1') c
+          on a.pf_id = c.pf_id
+        where attached_code = '30151'
+    </select>
+    
+</mapper>

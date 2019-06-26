@@ -1,0 +1,56 @@
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:font-weight="http://www.w3.org/1999/xhtml">
+<html >
+<head>
+    <meta charset="UTF-8">
+    <title>CSRC-TOOL</title>
+</head>
+<body>
+<br>
+<form action="generate" method="GET">
+    <div align="center">
+      <label align="center"><b>报送日期：</b></label> <label align="center"><input type="text" name="subdate" ></label><label align="center"> <input type="submit" value="生成EXCEL" font-weight:bold></label><br>
+    <table border="0" width="300px" >
+                <tr>
+                    <td align="center" ><input type="checkbox" onclick="swapCheck()" /></td>
+                    <td ><b>报表名称</b></td>
+                </tr>
+                <tr th:each="reportdata : ${reportlist}" >
+                    <td><input type="checkbox" NAME="reportid" th:value="${reportdata.getReportid()}" align="center" ></td>
+                    <td th:text="${reportdata.getReportname()}"  ></td>
+                </tr>
+            </table>
+    </div>
+</form>
+
+</body>
+<style type="text/css">
+    td
+    {
+        white-space: nowrap;
+    }
+</style>
+<script type="text/javascript"
+        src="http://apps.bdimg.com/libs/jquery/2.1.1/jquery.min.js"></script>
+
+<script type="text/javascript">
+    //checkbox 全选/取消全选
+    var isCheckAll = false;
+    function swapCheck() {
+        if (isCheckAll) {
+            $("input[type='checkbox']").each(function() {
+                this.checked = false;
+            });
+            isCheckAll = false;
+        } else {
+            $("input[type='checkbox']").each(function() {
+                this.checked = true;
+            });
+            isCheckAll = true;
+        }
+    }
+
+
+
+</script>
+</html>
