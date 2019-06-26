@@ -25,7 +25,7 @@
     </select>
 
     <select id="report" resultMap="ResultMap">
-        select  a.report_id as reportid ,b.report_name as reportname ,a.dataset_sql as reportsql,b.submit_time_limit as submittimelimit,b.isrelateproduct from (
+        select  a.dataset_code as reportid ,b.report_name as reportname ,a.dataset_sql as reportsql,b.submit_time_limit as submittimelimit,b.isrelateproduct from (
          select  t.dataset_code,t.dataset_name,t.dataset_sql,t.report_id
          from TC_REP_DATASET t
          where t.dataset_code between 'A00040' and 'A00106'
