@@ -10,13 +10,15 @@
 <form action="generate" method="GET">
     <div align="center">
       <label align="center"><b>报送日期：</b></label> <label align="center"><input type="text" name="subdate" ></label><label align="center"> <input type="submit" value="生成EXCEL" font-weight:bold></label><br>
-    <table border="0" width="300px" >
+    <table border="0" width="300px" align="center"  >
                 <tr>
-                    <td align="center" ><input type="checkbox" onclick="swapCheck()" /></td>
+                    <td  ><input type="checkbox" onclick="swapCheck()" /></td>
+                    <td ><b>报表ID</b></td>
                     <td ><b>报表名称</b></td>
                 </tr>
                 <tr th:each="reportdata : ${reportlist}" >
-                    <td><input type="checkbox" NAME="reportid" th:value="${reportdata.getReportid()}" align="center" ></td>
+                    <td><input type="checkbox" NAME="reportid" th:value="${reportdata.getReportid()}" ></td>
+                    <td th:text="${reportdata.getReportid()}"  ></td>
                     <td th:text="${reportdata.getReportname()}"  ></td>
                 </tr>
             </table>

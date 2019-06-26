@@ -27,7 +27,7 @@ public class ToolController {
             String[] reportids = reportid.split(",");
             toolService.generate(subdate,reportids);
         }
-        return "forward:/csrc/tool";
+        return "redirect:/csrc/tool";
     }
 
 
